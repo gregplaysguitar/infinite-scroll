@@ -122,6 +122,16 @@
         
     };
     
+    function getmatch(str, re, i) {
+        var match = str.match(re);
+        if (match) {
+            return match[i];
+        }
+        else {
+            return '';
+        }
+    };
+
     function loadCallback(html){
         // if we've hit the last page..
 		if (opts.isDone){ 
@@ -132,8 +142,10 @@
           
           
             // get new path
+            var content = getmatch(html, /<body[^>]*>([\S\s]*)<\/body>/, 1),
+                contentEl = $('<div>' + content + '</div>');
             
-		    nextPath = $(html).find(opts.navSelector).attr('href');
+            nextPath = contentEl.find(opts.nextSelector).attr('href');
 		
           
             var children = box.children();
